@@ -1,14 +1,17 @@
-Visit my board at bbs.opicron.eu
-
 # mysticbbs
 
-Docker install of the Mystic v1.12 alpha 39 BBS software.
+Docker image for the Mystic 1.12 Alpha 48 BBS software.
+
+Official wiki: http://wiki.mysticbbs.com
 
 Includes start, stop and boot script for correct signal term handling.
 
 <img src="https://raw.githubusercontent.com/opicron/mysticbbs/master/main.PNG" width="300"> <img src="https://raw.githubusercontent.com/opicron/mysticbbs/master/login.PNG" width="300">
 
-// Yes, I know there is an version alpha 46, i'm running it-- upgrade yourself ;)
+20/02/2023:
+- Added rootless account
+- added the tail of /mystic/logs to fd 1
+- small modifications to sh scripts
 
 11/08/2020:
 - added cleanup signal to entrypoint bash script
@@ -38,9 +41,19 @@ Used the following source for the start/stop scripts:
 https://vswitchzero.com/mystic-systemd/
 
 # todo:
-- tba
+- python
 
 # install
+You can use docker compose like this:
+```
+services:
+  TODO
+```
+
+You can also compile the image yourself:
+```
+docker build -d bbs_mystic_image .
+```
 
 ## Volumes
 
@@ -54,11 +67,6 @@ To make the usage easier the logs are tail'ed in main docker window as in the fo
 
 <img src="https://raw.githubusercontent.com/opicron/mysticbbs/master/logs.png" width="400">
 
-## Ports
-
-Make sure you map the ports from AUTO to manually set ports. If not set manually Synology will set random ports on each restart:
-
-<img src="https://raw.githubusercontent.com/opicron/mysticbbs/master/ports_crop.png" width="400">
 
 # telnet clients
 
@@ -67,12 +75,6 @@ Make sure you map the ports from AUTO to manually set ports. If not set manually
 - SyncTerm
 - EtherTerm3
 - MT32
-
-# synology correct IP in docker
-
-sudo iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
-
-https://stackoverflow.com/questions/61624998/how-do-i-prevent-docker-from-source-nating-traffic-on-synology-nas
 
 # modding
 
@@ -91,10 +93,6 @@ http://andr01d.zapto.org:8080//tutor/1ledit.txt.htm
 http://docs.wwivbbs.org/en/latest/conn/fail2ban/
 
 https://www.youtube.com/watch?v=HLmjBydrL7U
-
-# ssl
-
-https://stackoverflow.com/questions/32856389/how-to-import-ssl-in-python-2-7-6
 
 https://stackoverflow.com/questions/17309288/importerror-no-module-named-requests
 
