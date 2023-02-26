@@ -42,6 +42,8 @@ https://vswitchzero.com/mystic-systemd/
 
 # todo:
 - python
+- nodespy
+- easy configuration scripts
 
 # install
 You can use docker compose like this:
