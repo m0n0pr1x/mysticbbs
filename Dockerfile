@@ -1,71 +1,71 @@
-#FROM debian:stretch-slim
-FROM python:2.7.18-stretch
-MAINTAINER opicron <opicron@gmail.com>
+FROM debian:latest
 
+# Installing dependencies
+RUN apt update \
+    && apt install -y wget unar gcc make procps sudo unzip build-essential gcc-9 g++-9
+
+# Mystic BBS installation
 WORKDIR /root
-RUN sed -i "s#deb http://deb.debian.org/debian stretch main#deb http://deb.debian.org/debian stretch main non-free#g" /etc/apt/sources.list
-RUN apt-get update; apt-get -y upgrade
-# openssl libssl-dev
-#RUN dpkg --add-architecture i386; apt-get update; apt-get -y install libc6:i386 wget build-essential manpages-dev unzip unrar procps mc libpython2.7 python-pip
-#RUN dpkg --add-architecture i386; apt-get update; apt-get -y install libc6:i386 wget build-essential manpages-dev unzip unrar procps mc libpython2.7:i386 python-pip
+RUN wget http://www.mysticbbs.com/downloads/mys112a48_l64.rar \
+    && unar mys112a48_l64.rar \
+    && cd mys112a48_l64
 
-#install and compile python
-RUN dpkg --add-architecture i386; apt-get update
-#RUN apt-get -y install build-essential checkinstall manpages-dev unzip unrar procps mc htop wget
-RUN apt-get -y install unzip unrar procps mc htop wget
-##RUN apt-get -y install libsqlite3-dev zlib1g-dev libncurses5-dev libgdbm-dev libbz2-dev libreadline-gplv2-dev libssl-dev libdb-dev tk-dev
-#RUN apt-get -y install libsqlite3-dev zlib1g-dev libncursesw5-dev libgdbm-dev libbz2-dev libreadline-gplv2-dev libssl-dev libdb-dev tk-dev libc6-dev libbz2-dev
-RUN apt-get -y install zip rar
+# Cryptolib installation (for SSH and SSL capabilities)
+WORKDIR /cryptlib
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+RUN wget http://www.mysticbbs.com/downloads/cl345.zip \
+    && unzip -ax cl345.zip \
+    && make shared \
+    && mv libcl.so.3.4.5 /usr/lib/libcl.so
+
+# RUN wget https://cryptlib-release.s3-ap-southeast-1.amazonaws.com/cryptlib346.zip \
+#     && unzip -xa cryptlib346.zip \
+#     && make shared \
+#     && mv libcl.so.3.4.6 /usr/lib/libcl.so
+
+# Copy default mystic installation
+COPY ./mystic/ /mystic
+COPY ./src /mystic
 
 
-#RUN wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz
-#RUN tar -xzf Python-2.7.15.tgz
-#RUN cd /root/Python-2.7.15
-#WORKDIR /root/Python-2.7.15
-##RUN cd /usr/src/Python-2.7.18
-##RUN ./configure -enable-optimizations --prefix=/usr --enable-shared
-#RUN ./configure -enable-optimizations -enable-unicode=ucs4 -enable-shared
-#RUN make
-#RUN make install
-
-RUN apt-get -y install cron
-# Copy hello-cron file to the cron.d directory
-COPY mail-cron /etc/cron.d/mail-cron
-RUN chmod +x /etc/cron.d/mail-cron
-# Apply cron job
-RUN crontab /etc/cron.d/mail-cron
-#RUN cron
-
-WORKDIR /root
-RUN cp /usr/bin/unrar /usr/bin/rar
-RUN apt-get clean
-ADD http://www.mysticbbs.com/downloads/mys112a39_l64.rar /root
-RUN unrar-nonfree x mys112a39_l64.rar
-ADD ./mystic /mystic
-RUN cp /root/upgrade /mystic/
-ADD ./src /mystic
-RUN chmod +x /mystic/boot.sh
-RUN chmod +x /mystic/start.sh
-RUN chmod +x /mystic/stop.sh
-RUN rm -fr /root/*
-RUN wget http://www.mysticbbs.com/downloads/cl3431.zip
-RUN unzip -a cl3431.zip
-RUN make shared
-RUN mv /root/libcl.so.3.4.3 /lib/libcl.so
-RUN rm -fr /root/*
-WORKDIR /mystic/
+WORKDIR /mystic
 RUN ./upgrade
-#RUN apt-get -y purge wget build-essential manpages-dev unzip unrar
+
+
+# Ports Available does not actually open them, but allow you to in docker
+# compose or docker run
 EXPOSE 23/tcp
 EXPOSE 22/tcp
+EXPOSE 513/tcp
+EXPOSE 21/tcp
 EXPOSE 24554/tcp
-#CMD ["/mystic/mis","server"]
-#ENTRYPOINT ["/mystic/boot.sh"]
-#keeps restarting
-#ENTRYPOINT ["/bin/bash", "-c", "/mystic/boot.sh"]
+EXPOSE 119/tcp
+EXPOSE 110/tcp
+EXPOSE 25/tcp
+
+
+# Creating a different user with less capabilites than root (for obvious
+# security reason)
+ARG USERNAME=mystic
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && adduser --disabled-password --disabled-login --no-create-home --gid $USER_GID --uid $USER_UID --gecos '' $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:/mystic/mis > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+RUN chown -R mystic:mystic /mystic
+
+RUN chmod 0555 /mystic/boot.sh /mystic/start.sh /mystic/stop.sh
+
+
+# Cleaning
+RUN rm -rf /root/* /cryptlib
+RUN apt purge -y wget unar gcc make unzip build-essential gcc-9 g++-9
+
+# Starting
+USER $USERNAME
 ENTRYPOINT ["/mystic/boot.sh"]
 CMD ["mystic"]
-#ENTRYPOINT while true;do sleep 50000;done
-#CMD ["/bin/bash", "-c", "/mystic/boot.sh"]
-#works
-

@@ -1,0 +1,7 @@
+; BADUSERS.TXT
+; ============
+; This file contains a list of user names that are not allowed when setting
+; the account's user name.  The list should contain a single name per line and
+; can include a * wildcard.  Lines that are blank or begin with a semi-colon
+; are considered comments.
+sysop

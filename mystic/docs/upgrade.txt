@@ -11,17 +11,293 @@
     installation to a temporary directory, so that you have access to the
     latest version of the files.  Then follow the upgrade instructions provided
     below for your specific version.  Usually this just means replacing new
-    binary files contained in the new alpha.  DO NOT ATTEMPT TO INSTALL OVER
-    YOUR EXISTING SETUP!
+    binary files contained in the new alpha.  DO NOT ATTEMPT TO DO A FULL
+    INSTALL OVER YOUR EXISTING SETUP!
 
  3. REVIEW THE WHATSNEW.TXT for this alpha.  The WHATSNEW is structured to show
     what has been added/fixed between alphas, and also provides documentation
     for new or changed features.
 
- 4. REMEMBER #1 TO BACKUP YOUR BBS DIRECTORY! :)
+ 4. Your BBS should be completely offline when you perform the upgrades.
+
+ 5. REMEMBER #1 TO BACKUP YOUR BBS DIRECTORY! :)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[ INDIVIDUAL ALPHA UPGRADE INSTRUCTIONS - FOR 1.11 TO CURRENT SEE THE NEXT SECTION ]
+[ INDIVIDUAL ALPHA UPGRADE INSTRUCTIONS - FOR 1.11 TO A39 SEE THE NEXT SECTION ]
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A47 to A48 |-------------------------
+ `--------------------------------'
+
+ - Replace the binaries with the new versions.  You can do this by running:
+
+      install replace c:\mystic (Windows)
+      ./install replace /mystic (Linux)
+
+ - Added new prompt #328.  If you have ever customized this prompt in any themes
+   you've used, then you should go into that theme and reset prompt 328 to its
+   default value (CTRL+R) within the prompt editor.  It is now used for the
+   non-ANSI archive list prompt.  If you have not customized this prompt then
+   Mystic will update it automatically and you do not need to do anything.
+
+ - Rename "blacklist.txt" in your DATA folder to "denylist.txt"
+ - Rename "whitelist.txt" in your DATA folder to "allowlist.txt"
+ - Rename "trashcan.dat"  in your DATA folder to "badusers.txt"
+
+ - Run "mutil -run packfilebases" to force Mystic to regenerate the file list
+   indexes.
+
+ - If you have started with a fresh A47 install and you did not intentionally
+   install a startup.mps/mpx file then you should delete startup.mps and
+   startup.mpx from your scripts directories.  The default installation for A47
+   was accidentally installing a startup.mps and startup.mpx in the script
+   directory and its important to remove it if you started with a fresh A47.
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A46 to A47 |-------------------------
+ `--------------------------------'
+
+ - Replace the binaries with the new versions.  You can do this by running:
+
+      install replace c:\mystic
+      ./install replace /mystic
+
+   Note: This should also replace your prompts.dat file as well as the binary
+   files.
+
+ - Optional: Add new 132x36 full screen editor template to the default theme
+   text directory (and for other themes you may have):
+
+     install extract msg_editor.c132* c:\mystic\themes\default\text
+
+ - If you use the default msg_editor.ini then you should replace it with the
+   new one, otherwise refer to the What's New and the new default template
+   for how to upgrade it to support Tagline changes.  You can replace the
+   default like this:
+
+     install extract msg_editor.ini c:\mystic\themes\default\text
+
+ - You will need to install the new Taglines template and default Taglines
+   database:
+
+     install extract taglines.ans c:\mystic\themes\default\text
+     install extract taglines.ini c:\mystic\themes\default\text
+     install extract taglines.dat c:\mystic\data
+
+   It is also recommended that you go into System Configuration > New User
+   Settings 2 and set "Taglines" to On so new users will default to having
+   Taglines enabled if you wish them to (or set to Off if you want them off
+   by default).
+
+ - Install the new ANSI viewer template files:
+
+     install extract ansiview.ans c:\mystic\themes\default\text
+     install extract ansiview_help.ans c:\mystic\themes\default\text
+     install extract ansiview.ini c:\mystic\themes\default\text
+
+ - Install the new ANSI gallery template files:
+
+     install extract gallery.ans c:\mystic\themes\default\text
+     install extract gallery.ini c:\mystic\themes\default\text
+
+ - If you have customized prompt #132 (the More prompt) in any of your themes,
+   you will need to reset it to the default or update it to include the
+   hotkeys as described in the whatsnew (add YNC to the beginning)
+
+ - If you have customized prompt #522 (Yes No prompt text) in any of your
+   themes, you will need to reset it to the default or update it to include
+   the hotkeys as described in the whatsnew (add YN to the beginning).
+
+ - If you use the default bulletin system (bulletin.mps) then you should
+   replace it with the newer one otherwise you will probably get an error
+   trying to compile it:
+   
+      install extract bulletin.mps c:\mystic\themes\default\scripts
+
+ - Recompile all MPL programs.  You can do this by running mplc -T in your
+   root Mystic BBS directory to compile all scripts within your themes.
+
+ - You can delete "fidopoll" as it has been officially replaced by the POLL
+   command in MIS.  It will no longer be included, supported, or upgraded.  If
+   you still use "fidopoll" in your events or scripts you can simply replace
+   the word "fidopoll" with "mis poll" as they are functionally the same.
+
+ - If you disabled fallback in any of your themes then you must go into the
+   theme editor and reset the values for fallback as these have been split
+   into specific fallback settings for each category (menu, prompts, etc)
+
+ - Execute upgrade.exe to update your data files for A47.
+
+ - Delete "echodupes.dat" from your DATA folder to reset your echomail dupe
+   scan database.
+
+ - Force Mystic to regenerate your File List indexes by running the pack file
+   base function in MUTIL:
+
+     MUTIL -run PackFileBases
+
+ - If you use the NNTP/NNTPS server at all or you plan to in the future then
+   pack the message bases so Mystic can generate a MSGID for any message that
+   is missing one:
+
+     MUTIL -run PackMessageBases
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A45 to A46 |-------------------------
+ `--------------------------------'
+
+ - Replace the binaries with the new versions.  You can do this by running:
+
+      install replace c:\mystic
+      ./install replace /mystic
+
+ - If you weren't already using the "new" message index reader that was added
+   a year or so ago, then you may need to add the template for it to your
+   themes
+
+      install extract msg_index* c:\mystic\themes\default\text
+      ./install extract msg_index* /mystic/themes/default/text
+
+   You can also delete "ansimidx.ini" which is the old template found in the
+   text directories of themes.  It is no longer being used.
+
+ - Add mis_poll.ans to your data directory:
+
+      install extract mis_poll.ans c:\mystic\data
+
+ - Run "upgrade" in your root Mystic directory to upgrade data files
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A44 to A45 |-------------------------
+ `--------------------------------'
+
+ - This is just mostly a bugfix release and only requires the binaries to be
+   replaced with the new ones.  You must be running A44 already.
+
+   You can do this by running:
+
+      install replace c:\mystic
+      ./install replace /mystic
+
+   Where /mystic is your BBS root directory.  If you're using a Unix based
+   system of course you will need to have access to replace the files.
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A43 to A44 |-------------------------
+ `--------------------------------'
+
+ - This is a big upgrade with lots of internal changes, so please it is very
+   crucial that you make a backup before proceeding.
+
+ - Extract Mystic archive to a folder.
+
+ - Replace existing binaries with the new alpha binaries:
+
+      mystic.exe
+      mis.exe
+      fidopoll.exe
+      mutil.exe
+      nodespy.exe
+      qwkpoll.exe
+      upgrade.exe
+      mplc.exe
+      mide.exe
+
+    You can do this automatically by typing "install replace <mystic dir>"
+    Example: install replace c:\mystic
+
+    If you prefer to manually copy files, you can install Mystic to a temp
+    directory and just copy the files installed in the new fresh installation
+    over the old ones (this holds true for all steps here).
+
+ - Type "install extract prompts.dat <mystic data dir>" or you can install A44
+   to a temporarily directory and manually copy prompts.dat from the A44 data
+   directory.  Example: install extract prompts.dat c:\mystic\data
+
+ - If you use the default bulletin system (bulletin.mps) then you may want to
+   replace it with an updated version that takes into consideration some of the
+   theme inheritance features.  install extract bulletin.mps c:\mystic\scripts
+
+ - Switch to root Mystic directory and run upgrade.exe
+
+ - Recompile all MPL scripts (mplc -all in your root Mystic directory)
+
+   Note: Because mide/mplc.exe are sometimes stored in multiple locations it
+   may be that the A44 mide/mplc.exe files get overwritten during the upgrade
+   process.  If that happens you can extract them by using the install utility:
+
+     install extract mplc.exe c:\mystic
+     install extract mide.exe c:\mystic
+
+   The new recommended location for mplc is to keep it in the root Mystic
+   directory moving forward.
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A42 to A43 |-------------------------
+ `--------------------------------'
+
+ - Replace existing binaries with the new alpha binaries:
+      mystic.exe
+      mis.exe
+      fidopoll.exe
+      mutil.exe
+      nodespy.exe
+      qwkpoll.exe
+      upgrade.exe
+      mplc.exe (in scripts directory)
+      mide.exe (in scripts directory)
+
+ - Copy userchat.ans and userchat.ini from the TEXT folder into your TEXT
+   folder
+
+ .------------------------------------.
+ | UPGRADING FROM 1.12 A40-A41 to A42 |-------------------------
+ `------------------------------------'
+
+ - Replace existing binaries with the new alpha binaries:
+
+      mystic.exe
+      mis.exe
+      fidopoll.exe
+      mutil.exe
+      nodespy.exe
+      qwkpoll.exe
+      upgrade.exe
+      mplc.exe (in scripts directory)
+      mide.exe (in scripts directory)
+
+ .--------------------------------.
+ | UPGRADING FROM 1.12 A39 to A40 |-------------------------
+ `--------------------------------'
+
+ - Replace existing binaries with the new alpha binaries:
+
+      mystic.exe
+      mis.exe
+      fidopoll.exe
+      mutil.exe
+      nodespy.exe
+      qwkpoll.exe
+      upgrade.exe
+      mplc.exe (in scripts directory)
+      mide.exe (in scripts directory)
+
+ - If you use default installation replace the default.txt from DATA with the
+   newer one, otherwise the following prompts have been modified or changed
+   and will need to be updated/added to your custom themes:
+
+     Changed prompts: 18, 419, 420, 463, 486
+         New prompts: 538-552
+
+ - Copy "msg_index.ini" from the TEXT folder into your TEXT folders
+ - Copy "msg_index.ans" from the TEXT folder into your TEXT folders
+ - Copy "msg_index_help.ans" from the TEXT folder into your TEXT folders
+
+ - Copy "cfgroot4.ans" from the DATA folder into your DATA folder
+
+ - Execute upgrade.exe
+
+ - Recompile MPL programs
 
  .------------------------------------.
  | UPGRADING FROM 1.12 A37/A38 to A39 |-------------------------
@@ -54,7 +330,7 @@
 
  - Replace "mis_events.ans" in your DATA folder with the newer one
    from the A39 installation
- 
+
  - Replace "areafixhelp.txt" in your DATA folder with the newer one
 
  - Replace "filefixhelp.txt" in your DATA folder with the newer one

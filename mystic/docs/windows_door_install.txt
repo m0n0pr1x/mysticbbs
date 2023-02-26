@@ -1,43 +1,70 @@
 
-ABOUT DOS DOORS AND WINDOWS BBSES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ABOUT DOS DOORS AND WINDOWS BBS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This guide provides an example of how to perform an installation of a DOS door
 game with Mystic BBS for Windows.
 
-Before we begin, there are a few things that need to be understood about doors
-and Windows:
+At the time of this writing only 32-bit Windows can run DOS software.  However,
+recently there has been a hacked version of Microsoft's Virtual DOS Machine
+based on some leaked source code.  This is designed to work in 64-bit Windows
+but its compatibility, and speed may be questionable.  Its also a legal grey
+area since it is not officially released by Microsoft.
 
-The first thing to understand is that newer 64-bit versions of Windows cannot
-execute DOS doors (or any DOS software) and therefore, the Windows operating
-system must be 32-bit in order to run DOS doors.  This is a Windows
-restriction, not a BBS restriction and holds true for all BBS software.
+This tutorial will assume that you are using Windows 32-bit.  If you wish to
+use 64-bit there is the NTVDM that you can try at your own risk along with
+the 64-bit version of NetFossil.  You can find more information here but please
+use this at your own risk:
 
-The second thing to understand is that a layer between the DOS door and the
-modern BBS is required in order to translate input and output from the game
-to your BBS.  This is true for all BBS softwares, including others that may
-appear to be "transparent"; they are using one too.
+http://www.columbia.edu/~em36/ntvdmx64.html
 
-In the case of Mystic, it does not currently package itself with a driver to
-translate DOS serial and fossil I/O but fear not there are many free drivers
-available to download.
+DOS doors traditionally used what is called a "FOSSIL driver" in order to
+interact with a serial modem.  When running software over a modern BBS, a
+piece of software is used to trap those old DOS FOSSIL calls and redirect them
+to the BBS user.
 
+There are two ways to do this using Windows 32-bit and only one way to do it
+when trying to use the 64-bit hacked NTVDM.  For most purposes the recommended
+way to run DOS doors in Windows 32-bit is to use the DOSXTRN method.  But for
+64-bit platforms and as an alternative in Windows 32-bit, NetFossil can be used.
 
 
 CHOOSING A DRIVER FOR DOS I/O REDIRECTION
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are several drivers available some are better than others, some are
-still supported, some are not, etc.  In this case we are going to use one
-called NetFoss.  
+When using Windows 32-bit the easiest thing to do is to use the DOSXTRN method
+to execute doors.  As long as SBBSEXEC.DLL and DOSXTRN.EXE are in the root
+Mystic BBS directory, then you can execute DOS doors in the exact same way that
+you would using DOS and Mystic will handle everything else behind the scenes.
 
-NetFoss is chosen because it is still supported, its is free, and it claims
-to be the most efficient driver available.  Its written entirely in Assembler
-which makes it lightning fast, and it uses a tiny 16KB footprint while
-running (according to it's documentation)!
+Another benefit of using the DOSXTRN method is that it works over all types of
+connections to the BBS without any sort of tunneling.  It is the fastest and
+easiest way to get things running.
 
-NetFoss can be downloaded from http://pcmicro.com/NetFoss
+These files are not distributed with Mystic BBS but for testing purposes at the
+moment you can find them at:
 
+http://www.mysticbbs.com/downloads/prealpha/dx.rar
+
+NOTE: If for some reason you are getting a message that Mystic cannot load the
+DLL file, you can also try moving the .DLL file into your C:\Windows\System32
+directory.
+
+The second method to using doors in Windows 32-bit that also can work with the
+64-bit version of Windows using the hacked 64-bit NTVDM mentioned above is to
+use the Freeware NetFossil software located at:
+
+http://pcmicro.com/netfoss/download.html
+
+NetFossil is slightly more difficult to set up as you have to set it up based
+on its own documentation and then when executing the door, NetFossil is
+executed instead and then NetFossil in turn executes your door.
+
+The pro of this is that it works in 64-bit Windows but the con is that it will
+only work over Telnet and RLOGIN connections (not SSH).
+
+This turtorial will show an example of setting up LORD using both of the
+methods discussed.
 
 
 DIRECTORY STRUCTRURE FOR THIS EXAMPLE
@@ -47,20 +74,23 @@ In this example, we have Mystic BBS installed to C:\MYSTIC and the doors
 will be installed in a subdirectory C:\MYSTIC\DOORS, so that all doors
 and related files are all tucked away neatly in their own subdirectory.
 
-We will install NetFoss in C:\MYSTIC\NETFOSS
+We will install NetFossil in C:\MYSTIC\NETFOSS for the NetFossil example
 
 
+DRIVER INSTALLATION (IF USING DOSXTRN)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SOFTWARE REQUIRED/USED FOR THIS TUTORIAL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-NetFoss v1.16 (I/O driver)
-Legend of the Red Dragon v4.07 (DOS door)
+Copy SBBSEXEC.DLL and DOSXTRN.EXE into your root Mystic directory (C:\MYSTIC)
 
 
+DRIVER INSTALLATION - NETFOSSIL (IF USING NETFOSSIL METHOD)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SOFTWARE INSTALLATION - NETFOSS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you are using the DOSXTRN method then you can skip this section
+
+Note that NetFossil may have had many updates since this tutorial has been
+created so its possible that some command line options will have changed.  You
+may need to reference the documentation of NetFossil on how to set it up.
 
 First lets set up NETFOSS.  This is a relatively quick and painless setup and
 it only has to be done one time ever.  Once this is done, we can run all doors
@@ -205,22 +235,37 @@ whereever you want it.  Then press ENTER on the new command to edit it:
 
    E.  Press ENTER on Command and Mystic will bring up a list of menu command
        options.  You can just start typing "external" and Mystic will
-       automatically figure out what you want, and move you to the "DD" menu
-       command.  Select "DD Exec external program"
+       automatically figure out what you want.
 
-   F.  The data field when using the DD command defines the command line that
-       Mystic will execute.  Lets set this up to call NETFOSS and tell it we
-       want it to run LORD.  This is the command line we need to use:
+       If you are using the DOSXTRN method then you will select "DX" menu
+       command.
 
-          c:\mystic\netfoss\nf.bat /N%3 /H%0 c:\mystic\doors\lord\start.bat %3
+       If you are using the NetFossil method then you would select the "DD"
+       menu command.
 
-       Now lets discuss what this means.  %0 passes the telnet socket handle
-       which is a requirement by NetFoss, and %3 translates to the node number
+   F.  The data field commands the command line that Mystic will execute when
+       the menu option is selected by the user.  This command will be different
+       depending on which method you are choosing to use to execute the door.
+
+       If you are using the DOSXTRN method (DX) then you would enter the same
+       command line that you would use if you were setting up the same door in
+       DOS:
+ 
+         c:\mystic\doors\lord\start.bat %N
+
+       If you are using the NetFossil method (DD) then you need to execute
+       NetFossil and tell it the command line for LORD:
+
+         c:\mystic\netfoss\nf.bat /N%N /H%H c:\mystic\doors\lord\start.bat %N
+
+       Now lets discuss what this means.  %H passes the telnet socket handle
+       which is a requirement by NetFoss, and %N translates to the node number
        which is required to pass to both NETFOSS and LORD's "start.bat".
 
-       All doors in the future will be configured in the following format:
+       All doors when using NetFossil in the future will be configured in the
+       following format:
  
-          c:\mystic\netfoss\nf.bat /N%3 /H%0 <DOOR COMMAND LINE>
+          c:\mystic\netfoss\nf.bat /N%N /H%H <DOOR COMMAND LINE>
 
        After you have this working, to create a new door configuration you can
        simply copy and paste the LORD menu command, then change the hot key,
@@ -236,17 +281,8 @@ CONCLUSION, TESTING AND TROUBLESHOOTING
 
 Now keep in mind you only ever have to configure NetFoss once and then you it
 never has to be done again.  And also keep in mind that LORD is one of the
-more annoying doors to configure (IMO).
-
-As mentioned above, the only thing that needs to be done for additional doors
-is to prefix their command line in the DATA portion of the menu command with
-the NETFOSS stuff:
-
-   c:\mystic\netfoss\nf.bat /N%3 /H%0 <DOOR COMMAND LINE>
+more annoying doors to configure (in my opinion) because you have to create a
+configuration for each node you have.  Most doors will not require those steps
 
 Remember to configure all of your doors to use a FOSSIL if they have the option
 to use serial or fossil.
-
-If you get a "Netfoss not found" error, did you remember to add the %1 into the
-NF.BAT as instructed?  Make sure it looks just like the example above!  Did you
-remember to set your doors to use FOSSIL communications?

@@ -1,0 +1,7 @@
+; BADEMAIL.TXT
+; ============
+; This file contains a list of bad e-mail addresses that are not allowed to be
+; entered by a user when setting their e-mail address.  The list should contain
+; a single e-mail address per line and can include a * wildcard.  Lines that
+; are blank or begin with a semi-colon are considered comments.
+

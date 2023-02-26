@@ -1,22 +1,23 @@
 
-  .--------------------------------.
-  | Mystic BBS Linux / OSX Manual  |------------------------------------
-  `--------------------------------'
+  .---------------------------------.
+  | Mystic BBS Linux / MacOS Manual |------------------------------------
+  `---------------------------------'
 
   NOTE: WHILE THE TERMINAL STUFF STILL APPLIES TO 1.11, IN MYSTIC 1.12
   MYSTIC SUPPORTS UTF8 AND SO IN OPERATING SYSTEMS SUCH AS PI OR OSX
   THAT DEFAULT TO UTF8, MYSTIC CAN LOOK NEARLY PERFECT WITH LITTLE TO
-  NO CHANGES REQUIRED TO STOCK TERMINALS.
+  NO CHANGES REQUIRED TO STOCK TERMINALS.  YOU CAN MOSTLY IGNORE THE
+  TERMINAL STUFF.
 
-  PLEASE SEE THE WIKI AT WIKI.MYSTICBBS.COM for more up to date
-  instructions specific to 1.12.
+  THIS GUIDE IS SOMEWHAT OUT OF DATE AND NEEDS A COMPLETE OVERHAUL IF YOU
+  HAVE CHANGES YOU THINK ARE NEEDED PLEASE LET ME KNOW.
 
 
   INTRODUCTION
   ============
 
   This document contains basic information for getting started with
-  Mystic BBS for Linux, OS/X, and other Unix based systems.  There
+  Mystic BBS for Linux, MacOS, and possibly other Unix based systems.  There
   are basically two things you will want to have for doing this:
 
     1. A terminal capable of displaying high ASCII characters
@@ -88,29 +89,42 @@
 
   Type ./install in your terminal window to install Mystic BBS.
 
-  If for some reason you get an error after kicking off the installation, then
-  you probably do not have access rights to create the directory where you
-  wanted to install Mystic BBS.
+  If you get an error saying the directory already exists, then you will need
+  to remove that directory or install somewhere else before running ./install
+  again.
 
-  You can either install it in a place where you have access, or optionally you
-  can exit the install, create the directory as root, then chown it to your
-  current user.  Something like this:
+  If you get an error saying it cannot create a directory its usually because
+  the user you are running install with does not have rights to create a
+  directory in the place you've tried to install.  You can try executing
+  "sudo ./install" so that the installation will have rights to create a
+  directory anywhere, but keep in mind you will want to chown the files to
+  the BBS user and group after the installation completes:
 
-    sudo mkdir /mystic
-    sudo chown myusername:myusergroup /mystic
-    ./install
+    chown -R user:group /mystic
 
-  NOTE: If for some reason you are trying to install Mystic under your user
-  directory, do not use the "~" shortcut as it does not always translate.
+  You can also perform a command line installation by using the auto command
+  "./install auto /mystic" but keep in mind the same points mentioned above
+  still apply.  The user running install needs to have rights to create the
+  installation directory, and that directory must not already exist.
 
-  Meaning for example in OSX, type in /Users/MyUserName instead of ~/ for
-  the installation paths.
+  If you want to do an automated install and force it to overwrite an existing
+  location then "./install auto /mystic overwrite" can by used, but again the
+  user running must have the capabilities to access and write to the desired
+  directory.  Be careful as this may overwrite some of your BBS configuration
+  if you install over your existing BBS.
 
-  If you chose to ignore this, you may end up with a directory named ~
-  in a location where you didn't expect.  And even worse, if you try to
-  delete it from the command prompt, you may end up wiping out your real
-  user home directories.
+  During automated install you can also assign specific directories for data,
+  theme, and msgs directories.  An example of combining all of those things at
+  once looks like this (less the overwrite keyword):
+ 
+    install auto /mystic theme=/mysticthemes msgs=/mysticmsgs data=/mysticdata
 
+  NOTE 1: You can type "./install help" to see a list of some additional
+  installation options from the terminal.
+
+  NOTE 2: If you are trying to install Mystic under your user directory, do
+  not use the "~" shortcut as it will not work.  For example in MacOS you
+  must type in /Users/MyUserName instead of ~/ for the installation path.
 
 
   GETTING STARTED WITH MYSTIC
@@ -120,24 +134,28 @@
   execute from your installation directory:
 
     Configuration:   ./mystic -cfg
-    Local login:     ./mystic
+    Local login:     ./mystic -l
     Startup servers: ./mis
                      ./mis -d        <- run in daemon mode    *****
 
-  I recommend to type ./mystic just to create your SysOp user account, and
-  then after logging out upgrading your access using the user editor in
-  ./mystic -cfg.
+  It is recommended to execute "./mystic -l" and create your SysOp user
+  account, and then after logging out execute "./mystic -cfg" to use the
+  user editor.  Once in the user editor, upgrade your security level to
+  SysOp.
 
 
   MYSTIC INTERNET SERVERS *****
   =======================
 
-  Mystic (MIS actually) has built in Telnet (with IO redirection for things
-  like DOSEMU), SMTP, POP3, FTP, and NNTP servers.
+  Mystic (MIS actually) has built in Telnet, RLOGIN, SSH, SMTP, POP3, FTP,
+  NNTP, BINKP, and HTTP servers.  Most Internet servers also work over SSL
+  using TLS 1.2+.  Mystic allows you to spawn multiple copies of each server
+  type so for example you can easily run multople telnet servers (for
+  example).
 
-  When running in Linux/OSX keep in mind that by default the
-  operating system will not let a service bind to a port less than
-  1025 unless it is a ROOT user (in Linux) and NOT AT ALL in OS/X.
+  When running in Linux/macOS keep in mind that by default the operating
+  system will not let a service bind to a port less than 1025 unless it is a
+  ROOT user (in Linux) and NOT AT ALL in MacOS.
 
   In Linux, MIS has the ability to switch from root back to whatever the user
   and group is that owns the executable AFTER it binds to the ports it needs
@@ -149,10 +167,13 @@
 
     sudo ./mis -d
 
-  As mentioned, it will NOT run as root.  It will only use root until it binds
-  to your ports, and then it will switch to the user who owns the executable.
+  As mentioned, it will not run as root.  It will only use root to immediately
+  bind the ports and then it will switch to the user who owns the executable.
 
-  NOW IN OS/X THIS TRICK DOES NOT SEEM TO WORK.
+  There are other ways to reconfigure Linux to allow a specific user to bind to
+  ports less than 1024 but that is not yet covered in this documentation.
+
+  NOW IN MACOS THIS TRICK DOES NOT SEEM TO WORK.
 
   Instead you have to load the Mystic Configuration and set your server ports
   greater than 1024.  We will do TELNET for example here.  Set your telnet

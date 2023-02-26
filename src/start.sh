@@ -48,7 +48,7 @@ fi
 # If the script gets to this point, it should be safe to start the mis daemon. The script first changes
 # directory to the mystic path specified just in case the "mysticbbs" environment variable is not set.
 cd $MIS_PATH > /dev/null
-$MIS_PATH/mis $MIS_OPTS
+sudo -n $MIS_PATH/mis $MIS_OPTS
 cd - > /dev/null
 
 #Keep checking to make sure the service starts:

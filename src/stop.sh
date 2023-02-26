@@ -32,8 +32,9 @@ fi
 
 # If the script gets to this point, it should be safe to stop the mis daemon. The script first changes
 # directory to the mystic path specified just in case the "mysticbbs" environment variable is not set.
+echo "Calling /mystic/mis shutdown..."
 cd $MIS_PATH > /dev/null
-$MIS_PATH/mis $MIS_SHUT_OPTS
+sudo -n $MIS_PATH/mis $MIS_SHUT_OPTS
 cd - > /dev/null
 
 MIS_COUNTER=0

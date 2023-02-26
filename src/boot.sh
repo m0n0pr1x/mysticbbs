@@ -19,11 +19,14 @@ trap 'cleanup' SIGTERM
 if [ "$1" = 'mystic' ]; then
 
     # run cron for fido polling
-    cron
     
     # run server
     /mystic/start.sh &
     
+
+    touch /mystic/logs/node1.log
+    ln -sf /proc/1/fd/1 /mystic/logs/node1.log
+
     # because we can not run the server mode
     while true
       do sleep 1
@@ -33,6 +36,6 @@ if [ "$1" = 'mystic' ]; then
     # this is this correct solution but in this case inefficient
     # /mystic/mis server &    
     
-else
-    exec "$@" &
+# else
+#     exec "$@" &
 fi

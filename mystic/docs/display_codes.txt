@@ -62,91 +62,98 @@
  -------------------------------------------------------------------------
  A.2  BBS and User Information Codes
  -------------------------------------------------------------------------
+* Updated from http://wiki.mysticbbs.com/doku.php?id=displaycodes
 
-   AG - User's age in years
-   AS - User's auto signature (On or Off)
-   AV - User's chat availability for user to user chat (Yes or No)
-   BD - User's baud rate (returns TELNET or LOCAL) (may be removed)
-   BI - User's birthdate in their selected date format
-   BN - BBS name from System configuration
-   CM - User's full screen node chat setting (On or Off)
-   CS - User's total number of calls to the BBS
-   CT - User's total number of calls to the BBS today
-   DA - Current date in the user's selected date format
-   DK - User's total downloads in kilobytes
-   DL - User's total number of downloaded files
-   DT - User's total number of downloads today
-   FB - User's current file base name
-   FG - User's current file group name
-   FK - User's total uploads in kilobytes 
-   FO - User's first call date in their selected date format
-   FT - Total number of files in current file base (dynamic)
-   FU - User's total number of files uploaded
-   HK - User's hotkey setting (On or Off)
-   IL - User's node status invisibility (On or Off)
-   KT - User's downloads in kilobytes today
-   LO - User's last call date in their selected date format
-   MB - User's current message base name
-   MD - Menu description of the current menu (from menu flags)
-   ME - User's total number of e-mails sent
-   MG - User's current message group name
-   ML - User's lightbar message index setting (On or Off)
-   MN - Network address of current message base
-   MP - User's total number of message posts
-   MT - Total number of messages in current message base (dynamic)
-   ND - Current node number
-   NE - Minutes until next BBS-type event
-   OS - Operating system (Windows, Linux, Raspberry Pi, etc)
-   PC - User's current post to calls ratio
-   PW - Configured number of days before required password change
-   QA - User's selected archive format (QWK, etc)
-   QE - User's Generate QWKE setting (Yes or No)
-   QL - User's Include QWK file listing setting (Yes or No)
-   RD - User's download ratio for their current security level (files)
-   RK - User's download ratio for their current security level (kilobytes)
-   SB - User's max allowed minutes in time bank for current security level
-   SC - User's max calls per day allowed for current security level
-   SD - User's current security level description
-   SK - User's max allowed download kilobytes per day for current sec level
-   SL - User's current security level number
-   SN - Configured Sysop name
-   SP - Configured post call ratio for the current security level
-   ST - Configured allowed minutes per day for current security level
-   SX - User's max allowed downloaded files per day for current security level
-   TB - User's timebank minutes
-   TC - Total number of calls to the BBS system
-   TE - User's terminal emulation (Ansi or Ascii)
-   TI - Current time of day in 12 hour format
-   TL - User's time left in minutes
-   TO - User's time spent online this session (in minutes)
-   U# - User's number (aka permanent user index)
-   U1 - User's optional data answer for question #1
-   U2 - User's optional data answer for question #1
-   U3 - User's optional data answer for question #1
-   UA - User's address
-   UB - User's file listing type (Normal or Lightbar)
-   UC - User's city, state
-   UD - User's data phone number
-   UE - User's message editor type (Line, Full, or Ask)
-   UF - User's Date input format (MM/DD/YY, DD/MM/YY, YY/DD/MM)
-   UG - User's gender (Male or Female)
-   UH - User's handle (alias)
-   UI - User's User information field
-   UJ - User's message reader type (Normal or Lightbar)
-   UK - User's email address
-   UL - User's selected theme description
-   UM - User's lightbar message index setting (On of Off)
-   UN - User's real name
-   UP - User's Home phone number
-   UQ - User's full screen editor quote mode (Standard or Lightbar)
-   US - User's screen size lines (ie 25)
-   UX - User's computer/router/internet host name
-   UY - User's IP address
-   UZ - User's zip (postal) code  
-   VR - Mystic BBS version number
-   XD - Days left before the user's account expires (or 0 if none)
-   XS - Security level in which the user's account will expire to
-   
+    AG - User's age in years
+    AS - User's auto signature (On or Off)
+    AV - User's chat availability for user to user chat (Yes or No)
+    BD - User's baud rate (returns TELNET or LOCAL) (may be removed)
+    BI - User's birth date in their selected date format
+    BN - BBS name from System configuration
+    CM - User's full screen node chat setting (On or Off)
+    CS - User's total number of calls to the BBS
+    CT - User's total number of calls to the BBS today
+    DA - Current date in the user's selected date format
+    DK - User's total downloads in kilobytes
+    DL - User's total number of downloaded files
+    DT - User's total number of downloads today
+    FB - User's current file base name
+    FG - User's current file group name
+    FK - User's total uploads in kilobytes
+    FO - User's first call date in their selected date format
+    FS - User's file group (short name)
+    FT - Total number of files in current file base (dynamic)
+    FU - User's total number of files uploaded
+    HK - User's hotkey setting (On or Off)
+    IL - User's node status invisibility (On or Off)
+    KT - User's downloads in kilobytes today
+    LO - User's last call date in their selected date format
+    MB - User's current message base name
+    MD - Menu description of the current menu (from menu flags)
+    ME - User's total number of e-mails sent
+    MF - Shows number of draft messages saved for the current user
+    MG - User's current message group name
+    ML - User's lightbar message index setting (On or Off)
+    MN - Network address of current message base
+    MP - User's total number of message posts
+    MS - User's message group (short name)
+    MT - Total number of messages in current message base (dynamic)
+    MU - Total unread personal messages *
+    MW - Total personal messages *
+    ND - Current node number
+    NE - Minutes until next BBS-type event
+    OS - Operating system (Windows, Linux, Raspberry Pi, etc)
+    PC - User's current post to calls ratio
+    PW - Configured number of days before required password change
+    QA - User's selected archive format (QWK, etc)
+    QE - User's Generate QWKE setting (Yes or No)
+    QL - User's Include QWK file listing setting (Yes or No)
+    RD - User's download ratio for their current security level (files)
+    RK - User's download ratio for their current security level (kilobytes)
+    SB - User's max allowed minutes in time bank for current security level
+    SC - User's max calls per day allowed for current security level
+    SD - User's current security level description
+    SK - User's max allowed download kilobytes per day for current sec level
+    SL - User's current security level number
+    SN - Configured Sysop name
+    SP - Configured post call ratio for the current security level
+    ST - Configured allowed minutes per day for current security level
+    SX - User's max allowed downloaded files per day for current security level
+    TB - User's timebank minutes
+    TC - Total number of calls to the BBS system
+    TE - User's terminal emulation (Ansi or Ascii)
+    TI - Current time of day in 12 hour format
+    TL - User's time left in minutes
+    TO - User's time spent online this session (in minutes)
+    U# - User's number (aka permanent user index)
+    U1 - User's optional data answer for question #1
+    U2 - User's optional data answer for question #1
+    U3 - User's optional data answer for question #1
+    UA - User's address
+    UB - User's file listing type (Normal or Lightbar)
+    UC - User's city, state
+    UD - User's data phone number
+    UE - User's message editor type (Line, Full, or Ask)
+    UF - User's Date input format (MM/DD/YY, DD/MM/YY, YY/DD/MM)
+    UG - User's gender (Male or Female)
+    UH - User's handle (alias)
+    UI - User's User information field
+    UJ - User's message reader type (Normal or Lightbar)
+    UK - User's email address
+    UL - User's selected theme description
+    UM - User's lightbar message index setting (On of Off)
+    UN - User's real name
+    UO - User's country of origin (as detected by IP/Country blocking)
+    UP - User's Home phone number
+    UQ - User's full screen editor quote mode (Standard or Lightbar)
+    US - User's screen size lines (ie 25)
+    UX - User's computer/router/internet host name
+    UY - User's IP address
+    UZ - User's zip (postal) code
+    VR - Mystic BBS version number
+    XD - Days left before the user's account expires (or 0 if none)
+    XS - Security level in which the user's account will expire to
+
 
  -------------------------------------------------------------------------
  A.3  COLOR CHANGING CODES (PIPE COLOR CODES)
@@ -223,7 +230,7 @@
  -------------------------------------------------------------------------
 
    Text formatting codes are most often used within the prompts file to
-   create aligned lists of data, for things such as the user list or 
+   create aligned lists of data, for things such as the user list or
    who's online, etc.  These codes, like many other display codes, set up
    the circumstances in which the display code after it are displayed
 
@@ -240,6 +247,7 @@
            character C
    $l##C - Left pad the next display code with character <C> to ## characters
    $r##C - Right pad the next display code with character <C> to ## chars
+*  PD    - Pads with spaces the next MCI code value result
 
    Examples (pay attention to the quotes):
 
@@ -258,11 +266,13 @@
       |$r30.|UN translates to..: "User Name....................."
       |$l30.|UN translates to..: ".....................User Name"
 
+*     |PD|UN translates to.....: " User Name "
+
    The difference between $D and $X is that D duplicates a set number of
    characters, while $X duplicates that character until a certain column
    is reached.  If you use $X30- on column 10, it will create 20 characters
    so it is dependant on the current location of the cursor.
-   
+
  -------------------------------------------------------------------------
  A.5  Screen/Cursor Related Codes
  -------------------------------------------------------------------------
@@ -279,13 +289,18 @@
    [L   - Move cursor and erase data backwards from current column to column ##
    [X## - Move cursor to X coordinate ##
    [Y## - Move cursor to Y coordinate ##
+*  [0   - Hide cursor (if terminal supports it)
+*  [1   - Show cursor (if terminal supports it)
    BS   - Sends 1 destructive backspace sequence (ASCII 8-32-8)
    CL   - Clears the screen (ANSI 1,1 locate and [2J or ASCII 12)
+*  CN   - Turns iCE colors OFF (if terminal supports it)
+*  CY   - Turns iCE colors ON (if terminal supports it)
    CR   - Send a carrage return and line feed (move to next line)
    RA   - Restore the saved text attribute color
    RS   - Restore the saved user's terminal screen
    SA   - Save the current text attribute color
    SS   - Save the entire user's terminal screen
+
 
  -------------------------------------------------------------------------
  A.6  Input Field Manipulation Codes
@@ -299,6 +314,7 @@
    -Y   - Forces the next Yes/No prompt to default to a Yes answer
    IF   - Turns off the input field background color for the next input
           prompt.
+*  IB   - Turns off input barrier for the next string input
    IN## - Sets the scrolling input field size for the next input prompt to
           ## characters.  If the maximum size of the input field is larger
           than this, Mystic will scroll the text inside so that it can
@@ -340,7 +356,7 @@
        This box is similar to the #B notification, except that it does not
        restore the user's screen content after displaying, and it does not
        wait for the user to press a key.  One use for this might be during
-       a new message scan "Scanning" prompt, for example. 
+       a new message scan "Scanning" prompt, for example.
 
          |#BNew Message Scan#Scanning: |&1...#
 
@@ -349,23 +365,26 @@
  A.8  Miscellaneous Unsorted Codes
  -------------------------------------------------------------------------
 
+*  AA   - Used in display files to enable aborting of the display file
    AO   - Used in display files to disable aborting of the display file
    BE   - Sends a ^G character to the terminal (beep code on some terms)
    DE   - Delay for half a second
    PA   - Send the pause prompt and wait for a key to be pressed
    PB   - Purge the current input buffer
    PI   - Display a pipe symbol (|)
+*  CH   - Prints out the character after (|CD| prints a pipe)
    PN   - Wait for a key to be pressed without prompting
    PO   - Used in display files to disable pausing for that display file
    QO   - Replaced with a randomly generated Quote of the Day
    RP## - Sets the internal screen pause line counter to ##
    XX   - Returns no value
 
+
    DF<file>| - Send display file <file> Example: |DFmyansi|
 
    DI## - Sets the baud rate of the current display file, using the
           following scale:
-  
+
             00 -    = No baud emulation
             01 - 09 = 300 baud
             10 - 19 = 1200 baud
@@ -391,7 +410,7 @@
    example, lets look at prompt #334:
 
      334 Jump to which message? (1-|&2):
- 
+
    In this prompt, &1 is replaced by the current message number, and &2
    is replaced by the total number of messages in the base.  These values
    are noted in the comments for that particular prompt in both the editor
@@ -406,4 +425,4 @@
    Note: These codes are slowly being depreciated because they're annoying
    to use.  The newer templates will have screen coordinates defined within
    a .INI-like text file.
-  
+
